@@ -1,0 +1,22 @@
+services:
+  apache:
+    build: apache-php-lamp
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./prestashop_8.2.1:/app
+      - ./apache-php-lamp/vhost-apache.conf:/etc/apache2/sites-enabled/vhost-apache.conf
+      - ./certs:/.certs
+    env_file:
+      - .env
+    networks:
+      redelamplemp:
+        aliases:
+          - oracle.lastcrave.shop
+    restart: unless-stopped 
+      
+volumes:
+  datos:
+networks:
+  redelamplemp:
