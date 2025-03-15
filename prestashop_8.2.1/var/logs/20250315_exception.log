@@ -1,0 +1,2 @@
+*ERROR* 	v8.2.1	2025/03/15 - 02:04:19: Link to database cannot be established: SQLSTATE[HY000] [2002] Connection refused at line 121 in file classes/db/DbPDO.php
+*ERROR* 	v8.2.1	2025/03/15 - 02:04:19: Link to database cannot be established: SQLSTATE[HY000] [2002] Connection refused at line 121 in file classes/db/DbPDO.php

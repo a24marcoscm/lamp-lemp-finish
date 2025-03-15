@@ -1,0 +1,6 @@
+.env
+.env.*
+certs.dev/*
+.ignoreLater
+certs/*
+prestashop_8.2.1/var/cache/prod

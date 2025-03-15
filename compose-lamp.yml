@@ -1,0 +1,55 @@
+services:
+  apache:
+    build: apache-php-lamp
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./prestashop_8.2.1:/app
+      - ./apache-php-lamp/vhost-apache.conf:/etc/apache2/sites-enabled/vhost-apache.conf
+      - ./certs:/.certs
+
+    env_file:
+      - .env
+
+    networks:
+      redelamplemp:
+        aliases:
+          - oracle.lastcrave.shop
+
+  basededatos:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    volumes:
+      - datos:/var/lib/mysql
+    networks:
+      redelamplemp:
+      
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    env_file:
+      - .env
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT} # Descomentar si desde dev se aponta a Aiven
+    networks:
+      - redelamplemp
+      
+  cliente:
+    hostname: cliente
+    image: brunosct/debian12-cliente-firefox
+    networks:
+      - redelamplemp
+    environment:
+    - DISPLAY=${DISPLAY}
+    volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix  
+volumes:
+  datos:
+networks:
+  redelamplemp:

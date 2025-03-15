@@ -1,0 +1,48 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./prestashop_8.2.1:/app
+      - ./nginx-lemp/vhost-nginx.conf:/etc/nginx/conf.d/vhost-nginx.conf
+      - ./certs:/.certs
+    env_file:
+      - .env
+    networks:
+      redelamplemp:
+        aliases:
+          - oracle.lastcrave.shop
+  phpserver:
+    build: php-lemp
+    volumes:
+      - ./prestashop_8.2.1:/app
+      - ./php-lemp/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
+    env_file:
+      - .env
+    networks:
+      redelamplemp:
+      
+  basededatos:
+    image: mysql:latest
+    env_file:
+      - .env
+    volumes:
+      - datos:/var/lib/mysql
+    networks:
+      redelamplemp:
+
+  cliente:
+    hostname: cliente
+    image: brunosct/debian12-cliente-firefox
+    networks:
+      - redelamplemp
+    environment:
+    - DISPLAY=${DISPLAY}
+    volumes:
+    - /tmp/.X11-unix:/tmp/.X11-unix  
+volumes:
+  datos:
+networks:
+  redelamplemp:
