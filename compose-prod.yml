@@ -1,0 +1,31 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./prestashop_8.2.1:/app
+      - ./nginx-lemp/vhost-nginx.conf:/etc/nginx/conf.d/vhost-nginx.conf
+      - ./certs:/.certs
+    env_file:
+      - .env
+    networks:
+      redelamplemp:
+        aliases:
+          - oracle.lastcrave.shop
+    restart: unless-stopped
+  phpserver:
+    build: php-lemp
+    volumes:
+      - ./prestashop_8.2.1:/app
+      - ./php-lemp/www.conf:/etc/php/8.1/fpm/pool.d/www.conf
+    env_file:
+      - .env
+    networks:
+      redelamplemp:
+    restart: unless-stopped 
+volumes:
+  datos:
+networks:
+  redelamplemp:
