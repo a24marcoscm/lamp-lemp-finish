@@ -34,11 +34,6 @@ MYSQL_PASSWORD=passwordUser # Cambiable por el valor deseable
 `docker compose -f compose-lemp.yml build`
 `docker compose -f compose-lemp.yml up`
 
-
-- Realizar el siguiente comando para cargar la base de datos necesaria para su funcionamiento.
-
-`./basededatos/restore.sh`
-
 - Listo ahora ya se puede acceder usando la url **[oracle.lastcrave.shop](oracle.lastcrave.shop)** desde el cliente firefox virtual
 
 > [!IMPORTANT]
